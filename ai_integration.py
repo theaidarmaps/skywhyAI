@@ -10,7 +10,8 @@ from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKe
 from google import genai
 
 from dotenv import load_dotenv
-
+from google.genai.errors import ClientError
+from httpx import ConnectError
 
 load_dotenv()
 
@@ -73,9 +74,12 @@ async def ai_answer_handler(message: Message, state: FSMContext):
     except TelegramBadRequest as br:
         print('error: ' + br.message)
         await message.answer('Произошла ошибка. Повторите попытку позже')
+    except ClientError as ce:
+        if ce.code == 400:
+            await message.answer('Невозможно обработать запрос')
     finally:
         data = await state.get_data()
-        button_msg_id = data.get("button_message_id")
+        button_msg_id = data.get('button_message_id')
         if button_msg_id:
             await message.bot.edit_message_reply_markup(
                 chat_id=message.chat.id,

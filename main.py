@@ -11,11 +11,15 @@ from aiogram.types import Message
 
 from dotenv import load_dotenv
 
+from ai_integration import ai_router
+
 load_dotenv()
 
 TOKEN = os.environ.get('API_TOKEN')
 
 dp = Dispatcher()
+
+dp.include_router(ai_router)
 
 async def main() -> None:
     bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))

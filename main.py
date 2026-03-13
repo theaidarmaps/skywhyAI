@@ -11,6 +11,8 @@ from dotenv import load_dotenv
 from api_weather import rt
 
 
+from ai_integration import ai_router
+
 load_dotenv()
 
 TOKEN = os.environ.get('API_TOKEN')
@@ -19,6 +21,8 @@ bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 dp = Dispatcher()
 dp.include_router(rt)
 
+
+dp.include_router(ai_router)
 
 async def main() -> None:
     await dp.start_polling(bot)

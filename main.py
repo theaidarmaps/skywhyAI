@@ -10,7 +10,8 @@ from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
 
 from dotenv import load_dotenv
-from api_weather import rt
+from api_weather import weather_rt
+from tonality_analysis import tonality_rt
 
 from ai_integration import ai_router
 
@@ -20,8 +21,7 @@ TOKEN = os.environ.get('API_TOKEN')
 
 bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 dp = Dispatcher()
-dp.include_router(rt)
-dp.include_router(ai_router)
+dp.include_routers(weather_rt, tonality_rt, ai_router)
 
 
 @dp.message(CommandStart())

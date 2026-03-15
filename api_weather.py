@@ -8,7 +8,7 @@ from aiogram.types import Message
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 
-rt = Router()
+weather_rt = Router()
 
 def get_weather(lat: float, lon: float, days: int = 5) -> str:
     url = "https://api.open-meteo.com/v1/forecast"
@@ -53,12 +53,12 @@ geolocator = Nominatim(user_agent="weather_bot")
 class WeatherState(StatesGroup):
     waiting_for_city = State()
 
-@rt.message(Command("weather"))
+@weather_rt.message(Command("weather"))
 async def weather_command(message: Message, state: FSMContext):
     await message.answer("Напиши город 🌍")
     await state.set_state(WeatherState.waiting_for_city)
 
-@rt.message(WeatherState.waiting_for_city)
+@weather_rt.message(WeatherState.waiting_for_city)
 async def get_city(message: Message, state: FSMContext):
     city = message.text
 

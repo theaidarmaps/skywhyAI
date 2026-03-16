@@ -11,7 +11,7 @@ from google import genai
 
 from dotenv import load_dotenv
 from google.genai.errors import ClientError
-from httpx import ConnectError
+
 
 load_dotenv()
 
@@ -25,7 +25,7 @@ class Form(StatesGroup):
     waiting = State()
 
 
-@ai_router.message(Command('ai_answer'))
+@ai_router.message(Command('ai'))
 async def ai_answer(message: Message, state: FSMContext):
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(text='Отменить', callback_data='cancel_answer')]

@@ -10,10 +10,11 @@ from aiogram.filters import CommandStart, Command
 from aiogram.types import Message
 
 from dotenv import load_dotenv
+
 from api_weather import weather_rt
 from tonality_analysis import tonality_rt
-
 from ai_integration import ai_router
+
 
 load_dotenv()
 
@@ -33,7 +34,7 @@ async def start_handler(message: Message) -> None:
 async def help_handler(message: Message) -> None:
     weather_help_text = '/weather - Спрашивает город, затем присылает погоду на следующие 5 дней'
     sentiment_help_text = '/sentiment {Сообщение} - Определяет тональность введенного ранее сообщения'
-    ai_help_text = '/ai_answer - Ожидает текстовый запрос, затем присылает ответ от нейронной сети (Gemini 3 flash)'
+    ai_help_text = '/ai - Ожидает текстовый запрос, затем присылает ответ от нейронной сети (Gemini 3 flash)'
 
     await message.answer(f'Список всех команд:\n{weather_help_text}\n{sentiment_help_text}\n{ai_help_text}')
 

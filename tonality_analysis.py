@@ -12,13 +12,12 @@ tonality_rt = Router()
 tiny_classifier = pipeline(
     'text-classification',
     model='cointegrated/rubert-tiny-toxicity',
-    return_all_scores=True
 )
 
 
 @tonality_rt.message(Command('sentiment'))
 async def sentiment_handler(message: Message):
-    text = message.text.replace('/sentiment ', '').strip()
+    text = message.text.replace('/sentiment', '').strip()
     if not text:
         await message.answer('После /sentiment текст')
         return
@@ -33,7 +32,7 @@ async def sentiment_handler(message: Message):
             text = orig
             lower_text = orig.lower()
 
-    tiny_results = tiny_classifier(text)[0]
+    tiny_results = tiny_classifier(text)
     tiny_top = max(tiny_results, key=lambda x: x['score'])
     tiny_score = round(tiny_top['score'], 3)
 
